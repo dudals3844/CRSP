@@ -1,7 +1,6 @@
 from sqlalchemy import create_engine
-import os
 import pandas as pd
-from dotenv import load_dotenv
+from config.settings import ENGINE
 
 class CRSP:
     conn = None
@@ -9,10 +8,7 @@ class CRSP:
     data = None
 
     def __init__(self, ncusip: str):
-        load_dotenv()
-        db_connect = os.environ.get('DB_CONNECT')
-        engine = create_engine(db_connect, echo=False)
-        self.conn = engine.connect()
+        self.conn = ENGINE.connect()
         self.ncusip = ncusip
         self.data = self.__get_data()
         self.data['adj_ratio'] = self.__calculate_adjust_ratio()
