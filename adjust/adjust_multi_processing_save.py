@@ -29,6 +29,7 @@ def download(ncusip: str):
     try:
         crsp = CRSP(ncusip)
         data = crsp.get()
+        data.reset_index(inplace=True)
         with pd.HDFStore('crsp.h5') as store:
             store.put(ncusip, data)
 
