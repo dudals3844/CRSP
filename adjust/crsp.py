@@ -27,6 +27,7 @@ class CRSP:
             WHERE NCUSIP = '{self.ncusip}' AND DATE > 19950101;
             """
         result = pd.read_sql(sql, self.conn)
+        result.dropna(subset=['close', 'profit'], inplace=True)
         result.set_index('date', inplace=True)
         result.index = pd.to_datetime(result.index, format='%Y%m%d')
         return result

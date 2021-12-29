@@ -15,7 +15,6 @@ def insert(ncusip: str):
         crsp = CRSP(ncusip)
         data = crsp.get()
         data = data.replace({np.nan: None})
-        data.dropna(subset=['close', 'profit'], inplace=True)
         data = data.reset_index()
         data['ticker'] = data['ticker'].fillna(method='bfill')
         dict_data = data.to_dict('records')
