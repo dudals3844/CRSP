@@ -41,8 +41,9 @@ class CRSP:
         return self.data.reset_index().set_index(['date', 'ticker'])
 
     def __calculate_adjust_ratio(self):
+        self.data['close'] = abs(self.data['close'])
         value = self.data['profit'].shift(-1) + 1
-        adjust_price = (1 / value).iloc[::-1].cumprod().iloc[::-1] * abs(self.data['close'].iloc[-1])
+        adjust_price = (1 / value).iloc[::-1].cumprod().iloc[::-1] * self.data['close'].iloc[-1]
         adjust_price.iloc[-1] = self.data['close'].iloc[-1]
         adjust_ratio = adjust_price / self.data['close']
         return adjust_ratio
