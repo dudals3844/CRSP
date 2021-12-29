@@ -29,6 +29,6 @@ if __name__ == "__main__":
     sql = """SELECT DISTINCT (NCUSIP) FROM tb_names WHERE EXCHCD IN (1,2,3,4);"""
     ncusips = pd.read_sql(sql, ENGINE.connect())['NCUSIP']
     pool = Pool(processes=20)
-    pool.map(download, ncusips)
+    pool.map(insert, ncusips)
     pool.close()
     pool.join()
